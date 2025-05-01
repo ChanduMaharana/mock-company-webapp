@@ -1,6 +1,28 @@
-pipeline {
-  /*
-   * TODO: Implement pipeline stages/steps
-   *   See documentation: https://www.jenkins.io/doc/book/pipeline/syntax/#stages
-   */
+vpipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                sh './gradlew assemble'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh './gradlew test'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and tests passed successfully.'
+        }
+        failure {
+            echo 'Build or tests failed.'
+        }
+    }
 }
